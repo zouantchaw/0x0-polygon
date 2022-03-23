@@ -17,4 +17,9 @@ contract Domains {
       domains[name] = msg.sender;
       console.log("%s has registered a domain!", msg.sender);
     }
+
+    // Retrieve domain owners address
+    function getAddress(string calldata name) public view returns {
+      return domains[name];
+    }
 }
