@@ -14,12 +14,12 @@ contract Domains {
 
     // Adds names to mapping
     function register(string calldata name) public {
-      domains[name] = msg.sender;
-      console.log("%s has registered a domain!", msg.sender);
+        domains[name] = msg.sender;
+        console.log('%s has registered a domain!', msg.sender);
     }
 
     // Retrieve domain owners address
-    function getAddress(string calldata name) public view returns {
-      return domains[name];
+    function getAddress(string calldata name) public view returns (address) {
+        return domains[name];
     }
 }
