@@ -1,17 +1,16 @@
 const main = async () => {
-  const [owner, randomPerson] = await hre.ethers.getSigners();
   // compile contract and generate files
   const domainContractFactory = await hre.ethers.getContractFactory("Domains");
-  // Initialize local ethereum network
-  const domainContract = await domainContractFactory.deploy();
+  // Initialize local ethereum network, pass in a root domain to contract constructor
+  const domainContract = await domainContractFactory.deploy('characktor');
   // Wait for contract to be mined and deployed
   await domainContract.deployed();
+
   // log address of deployed contract
   console.log("Contract deployed to:", domainContract.address);
-  console.log("Contract deployed by:", owner.address);
 
-  // Invoke contract function
-  let txn = await domainContract.register("doom");
+  // Invoke register func, pass in 'fake' matic
+  let txn = await domainContract.register("wiel", {value: hre.ethers.utils.parseEther('0.1')});
   await txn.wait();
 
   // Invoke contract function
