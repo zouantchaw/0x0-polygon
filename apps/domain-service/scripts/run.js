@@ -10,16 +10,15 @@ const main = async () => {
   console.log("Contract deployed to:", domainContract.address);
 
   // Invoke register func, pass in 'fake' matic
-  let txn = await domainContract.register("wiel", {value: hre.ethers.utils.parseEther('0.1')});
+  let txn = await domainContract.register("wiel", {value: hre.ethers.utils.parseEther('0.5')});
   await txn.wait();
 
   // Invoke contract function
-  const domainAddress = await domainContract.getAddress("doom");
-  console.log("Owner of domain doom:", domainAddress);
+  const address = await domainContract.getAddress("wiel");
+  console.log("Owner of domain wiel:", address);
 
-  // Setting a record that doesn't belong to "me"
-  txn = await domainContract.connect(randomPerson).setRecord("doom", "I want this domain");
-  await txn.wait();
+  const balance = await hre.ethers.provider.getBalance(domainContract.address);
+  console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
 }
 
 const runMain = async () => {
