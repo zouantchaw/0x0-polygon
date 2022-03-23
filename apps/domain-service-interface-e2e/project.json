@@ -1,0 +1,28 @@
+{
+  "root": "apps/domain-service-interface-e2e",
+  "sourceRoot": "apps/domain-service-interface-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/domain-service-interface-e2e/cypress.json",
+        "devServerTarget": "domain-service-interface:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "domain-service-interface:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/domain-service-interface-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["domain-service-interface"]
+}

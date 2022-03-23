@@ -1,0 +1,56 @@
+{
+  "root": "apps/domain-service-interface",
+  "sourceRoot": "apps/domain-service-interface",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/domain-service-interface",
+        "outputPath": "dist/apps/domain-service-interface"
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "options": {
+        "buildTarget": "domain-service-interface:build",
+        "dev": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "domain-service-interface:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "domain-service-interface:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/domain-service-interface"],
+      "options": {
+        "jestConfig": "apps/domain-service-interface/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/domain-service-interface/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
