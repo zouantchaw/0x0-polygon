@@ -8,6 +8,9 @@ contract Domains {
     // "mapping" data type to store names
     mapping(string => address) public domains;
 
+    // "mapping" to store values
+    mapping(string => string) public records;
+
     constructor() {
         console.log('My domain contract');
     }

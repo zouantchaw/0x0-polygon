@@ -11,12 +11,16 @@ const main = async () => {
   console.log("Contract deployed by:", owner.address);
 
   // Invoke contract function
-  const txn = await domainContract.register("doom");
+  let txn = await domainContract.register("doom");
   await txn.wait();
 
   // Invoke contract function
-  const domainOwner = await domainContract.getAddress("doom");
-  console.log("Owner of domain:", domainOwner);
+  const domainAddress = await domainContract.getAddress("doom");
+  console.log("Owner of domain doom:", domainAddress);
+
+  // Setting a record that doesn't belong to "me"
+  txn = await domainContract.connect(randomPerson).setRecord("doom", "I want this domain");
+  await txn.wait();
 }
 
 const runMain = async () => {
