@@ -30,6 +30,9 @@ contract Domains is ERC721URIStorage {
     // "mapping" to store values
     mapping(string => string) public records;
 
+    // "mapping" to all names
+    mapping(uint256 => string) public names;
+
     // Make contract payable
     constructor(string memory _tld)
         payable
@@ -116,6 +119,8 @@ contract Domains is ERC721URIStorage {
         _setTokenURI(newRecordId, finalTokenUri);
         domains[name] = msg.sender;
 
+        names[newRecordId] = name;
+
         _tokenIds.increment();
     }
 
@@ -138,6 +143,18 @@ contract Domains is ERC721URIStorage {
         returns (string memory)
     {
         return records[name];
+    }
+
+    // Put all names in a list
+    function getAllNames() public view returns (string[] memory) {
+        console.log('Getting all names from contract');
+        string[] memory allNames = new string[](_tokenIds.current());
+        for (uint256 i = 0; i < _tokenIds.current(); i++) {
+            allNames[i] = names[i];
+            console.log('Name for token %d is %s', i, allNames[i]);
+        }
+
+        return allNames;
     }
 
     modifier onlyOwner() {
