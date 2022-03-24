@@ -33,6 +33,10 @@ contract Domains is ERC721URIStorage {
     // "mapping" to all names
     mapping(uint256 => string) public names;
 
+    error Unauthorized();
+    error AlreadyRegistered();
+    error InvalidName(string name);
+
     // Make contract payable
     constructor(string memory _tld)
         payable
@@ -60,7 +64,8 @@ contract Domains is ERC721URIStorage {
     // Adds names to mapping
     function register(string calldata name) public payable {
         // Check if name is unregistered
-        require(domains[name] == address(0));
+        if (domains[name] != address(0)) revert AlreadyRegistered();
+        if (!valid(name)) revert InvalidName(name);
 
         uint256 _price = price(name);
 
@@ -132,7 +137,7 @@ contract Domains is ERC721URIStorage {
     // Set record for registered name
     function setRecord(string calldata name, string calldata record) public {
         // Check if owner is transaction sender
-        require(domains[name] == msg.sender);
+        if (msg.sender != domains[name]) revert Unauthorized();
         records[name] = record;
     }
 
@@ -155,6 +160,11 @@ contract Domains is ERC721URIStorage {
         }
 
         return allNames;
+    }
+
+    // Conditions for domain name registry
+    function valid(string calldata name) public pure returns (bool) {
+        return StringUtils.strlen(name) >= 3 && StringUtils.strlen(name) <= 10;
     }
 
     modifier onlyOwner() {
