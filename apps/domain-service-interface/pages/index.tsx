@@ -13,6 +13,8 @@ const CONTRACT_ADDRESS = '0x54e535C10D301Db7425Aa39C6F52bcd6DE1e8023';
 export function Index() {
   const [currentAccount, setCurrentAccount] = useState('');
 
+  const [loading, setLoading] = useState(false)
+
   const [mints, setMints] = useState([]);
 
   const [editing, setEditing] = useState(false);
@@ -25,7 +27,7 @@ export function Index() {
   // Implement your connectWallet method here
   const connectWallet = async () => {
     try {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
 
       if (!ethereum) {
         alert('Get MetaMask -> https://metamask.io/');
@@ -47,7 +49,7 @@ export function Index() {
 
   // Check for ethereum object in window
   const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
+    const { ethereum } = window as any;
 
     if (!ethereum) {
       console.log('Make sure you have metamask!');
@@ -81,10 +83,10 @@ export function Index() {
   };
 
   const switchNetwork = async () => {
-    if (window.ethereum) {
+    if ((window as any).ethereum) {
       try {
         // Try to switch to the Mumbai testnet
-        await window.ethereum.request({
+        await (window as any).ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
         });
@@ -93,7 +95,7 @@ export function Index() {
         // In this case we ask the user to add it to their MetaMask
         if (error.code === 4902) {
           try {
-            await window.ethereum.request({
+            await (window as any).ethereum.request({
               method: 'wallet_addEthereumChain',
               params: [
                 {
@@ -139,7 +141,7 @@ export function Index() {
       domain.length === 3 ? '0.5' : domain.length === 4 ? '0.3' : '0.1';
     console.log('Minting domain', domain, 'with price', price);
     try {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -189,7 +191,7 @@ export function Index() {
   // Fetch all domains
   const fetchMints = async () => {
     try {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
       if (ethereum) {
         // You know all this
         const provider = new ethers.providers.Web3Provider(ethereum);
@@ -233,7 +235,7 @@ export function Index() {
     setLoading(true);
     console.log('Updating domain', domain, 'with record', record);
     try {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
