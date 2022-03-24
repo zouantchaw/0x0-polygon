@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import { ethers } from 'ethers';
+import contractAbi from '../utils/contractABI.json'
 
 const tld = '.charaktor';
 const CONTRACT_ADDRESS = '0x54e535C10D301Db7425Aa39C6F52bcd6DE1e8023';
