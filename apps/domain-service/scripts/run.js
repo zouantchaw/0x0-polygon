@@ -2,7 +2,7 @@ const main = async () => {
   // compile contract and generate files
   const domainContractFactory = await hre.ethers.getContractFactory("Domains");
   // Initialize local ethereum network, pass in a root domain to contract constructor
-  const domainContract = await domainContractFactory.deploy('characktor');
+  const domainContract = await domainContractFactory.deploy('charaktor');
   // Wait for contract to be mined and deployed
   await domainContract.deployed();
 
@@ -10,7 +10,7 @@ const main = async () => {
   console.log("Contract deployed to:", domainContract.address);
 
   // Invoke register func, pass in 'fake' matic
-  let txn = await domainContract.register("wiel", {value: hre.ethers.utils.parseEther('0.5')});
+  let txn = await domainContract.register("wiel", {value: hre.ethers.utils.parseEther('0.8')});
   await txn.wait();
 
   // Invoke contract function
