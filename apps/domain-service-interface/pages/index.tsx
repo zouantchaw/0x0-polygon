@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import { ethers } from 'ethers';
-import contractAbi from '../utils/contractABI.json'
+import contractAbi from '../utils/contractABI.json';
+import { networks } from '../utils/network';
+import polygonLogo from '../assets/polygonlogo.png'
+import ethLogo from '../assets/ethlogo.png'
+import Image from 'next/image';
+
 
 const tld = '.charaktor';
 const CONTRACT_ADDRESS = '0x54e535C10D301Db7425Aa39C6F52bcd6DE1e8023';
 
 export function Index() {
   const [currentAccount, setCurrentAccount] = useState('');
+
+  const [network, setNetwork] = useState('');
 
   const [domain, setDomain] = useState('');
   const [record, setRecord] = useState('');
@@ -56,6 +63,17 @@ export function Index() {
       setCurrentAccount(account);
     } else {
       console.log('No authorized account found');
+    }
+
+    // check the user's network chain ID
+    const chainId = await ethereum.request({ method: 'eth_chainId' });
+    setNetwork(networks[chainId]);
+
+    ethereum.on('chainChanged', handleChainChanged);
+
+    // Reload the page on network change
+    function handleChainChanged(_chainId) {
+      window.location.reload();
     }
   };
 
@@ -155,9 +173,9 @@ export function Index() {
         />
 
         <div className="button-container">
-				<button className='cta-button mint-button' onClick={mintDomain}>
-					Mint
-				</button> 
+          <button className="cta-button mint-button" onClick={mintDomain}>
+            Mint
+          </button>
           <button
             className="cta-button mint-button"
             disabled={null}
@@ -182,6 +200,24 @@ export function Index() {
             <div className="left">
               <p className="title">👤 Charaktor Name Service</p>
               <p className="subtitle">Access your DNS across the metaverse!</p>
+            </div>
+            <div className="right">
+              <Image 
+                alt='Network logo'
+                className='logo'
+                src={network.includes('Polygon') ? polygonLogo : ethLogo}
+                width={20}
+                height={10}
+              />
+              {currentAccount ? (
+                <p>
+                  {' '}
+                  Wallet: {currentAccount.slice(0, 6)}...
+                  {currentAccount.slice(-4)}{' '}
+                </p>
+              ) : (
+                <p> Not connected </p>
+              )}
             </div>
           </header>
         </div>
