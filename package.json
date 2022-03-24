@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "build:domain-service-interface": "npm --prefix domain-service-interface run build"
   },
   "private": true,
   "dependencies": {
