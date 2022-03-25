@@ -121,7 +121,7 @@ contract Domains is ERC721URIStorage {
         // Mint NFT to newRecordId
         _safeMint(msg.sender, newRecordId);
         // Set NFT data
-        _setTokenURI(newRecordId, finalTokenUri);
+        _setTokenURI(newDomainId, 'ipfs://QmPMy3z64WkBGkDNUU1bBuN1vQaU8T3qTKZCSR1zKzwpxU');
         domains[name] = msg.sender;
 
         names[newRecordId] = name;
