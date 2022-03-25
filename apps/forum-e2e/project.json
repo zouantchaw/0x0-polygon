@@ -1,0 +1,28 @@
+{
+  "root": "apps/forum-e2e",
+  "sourceRoot": "apps/forum-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/forum-e2e/cypress.json",
+        "devServerTarget": "forum:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "forum:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/forum-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["forum"]
+}

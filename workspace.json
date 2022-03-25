@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "domain-service-interface": "apps/domain-service-interface",
-    "domain-service-interface-e2e": "apps/domain-service-interface-e2e"
+    "domain-service-interface-e2e": "apps/domain-service-interface-e2e",
+    "forum": "apps/forum",
+    "forum-e2e": "apps/forum-e2e"
   }
 }
