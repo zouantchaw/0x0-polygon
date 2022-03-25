@@ -10,14 +10,18 @@
   },
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^1.8.6",
+    "@davatar/react": "^1.9.0",
     "@nrwl/next": "13.9.4",
     "core-js": "^3.6.5",
     "ethers": "^5.6.1",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-query": "^3.34.17",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "wagmi": "^0.2.21"
   },
   "devDependencies": {
     "@nrwl/cli": "13.9.4",
