@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, HStack, Stack, Textarea } from "@chakra-ui/react";
 import { constants } from "ethers";
 import Avatar from "@davatar/react";
+import AuthButton from "./AuthButton";
 import { useAccount } from "wagmi";
 import useAddComment from "../hooks/useAddComment";
 
@@ -34,7 +35,7 @@ const CommentEditor: React.FunctionComponent<CommentEditorProps> = ({
           fontSize="lg"
         />
       </HStack>
-      <Button
+      <AuthButton
         size="sm"
         colorScheme="pink"
         alignSelf="flex-end"
@@ -50,7 +51,7 @@ const CommentEditor: React.FunctionComponent<CommentEditorProps> = ({
         isLoading={mutation.isLoading}
       >
         Submit
-      </Button>
+      </AuthButton>
     </Stack>
   );
 };
