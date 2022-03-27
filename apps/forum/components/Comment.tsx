@@ -5,6 +5,7 @@ import TimeAgo from "javascript-time-ago";
 import en from 'javascript-time-ago/locale/en.json'
 import Avatar from "@davatar/react";
 import { Comment } from "../hooks/useCommentsContract";
+import Username from "./Username";
 
 interface CommentProps {
   comment: Comment;
@@ -18,7 +19,7 @@ const Comment: React.FunctionComponent<CommentProps> = ({ comment }) => {
       <Avatar size={48} address={comment.creator_address} />
       <Stack spacing={1} flex={1} bg="whiteAlpha.100" rounded="2x1" p={3}>
         <Heading color="whiteAlpha.900" fontSize="lg">
-          {comment.creator_address}
+          <Username address={comment.creator_address} />
         </Heading>
         <Text color="whiteAlpha.800" fontSize="lg">
           {comment.message}
