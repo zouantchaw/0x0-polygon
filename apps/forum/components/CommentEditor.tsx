@@ -39,6 +39,7 @@ const CommentEditor: React.FunctionComponent<CommentEditorProps> = ({
         colorScheme="pink"
         alignSelf="flex-end"
         onClick={() => {
+          // invoke contract function
           mutation
             .mutateAsync({
               message,
