@@ -8,7 +8,7 @@ import { Provider as WagmiProvider } from 'wagmi';
 import { providers } from 'ethers';
 import Comments from "../components/Comments"
 
-const provider = providers.getDefaultProvider('http://localhost:8545');
+const provider = providers.getDefaultProvider('https://polygon-mumbai.g.alchemy.com/v2/o-1IWe-IDtbEkV47BBbEqjyI1uWf4vTW');
 
 // Create a react-query client
 const queryClient = new QueryClient({
