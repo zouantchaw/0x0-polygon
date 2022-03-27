@@ -8,6 +8,7 @@ interface CommentsProps {
 
 const Comments: React.FunctionComponent<CommentsProps> = ({ topic }) => {
   const query = useComments({ topic });
+  console.log(topic)
 
   return <Box as="pre">{JSON.stringify(query.data, null, 2)}</Box>;
 };
