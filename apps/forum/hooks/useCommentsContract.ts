@@ -26,7 +26,7 @@ const useCommentsContract = () => {
 
   // Initialize contract interaction
   const contract = wagmi.useContract({
-    addressOrName: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+    addressOrName: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
     contractInterface: CommentsContract.abi,
     signerOrProvider: signer.data || provider,
   });
