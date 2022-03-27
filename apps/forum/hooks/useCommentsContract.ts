@@ -26,7 +26,7 @@ const useCommentsContract = () => {
 
   // Initialize contract interaction
   const contract = wagmi.useContract({
-    addressOrName: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+    addressOrName: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     contractInterface: CommentsContract.abi,
     signerOrProvider: signer.data || provider,
   });
@@ -46,6 +46,8 @@ const useCommentsContract = () => {
     // Wait for transaction to be mined
     await tx.wait();
   };
+
+  console.log(contract.provider.network?.chainId)
 
   return {
     contract,
