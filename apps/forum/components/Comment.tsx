@@ -1,12 +1,16 @@
 import * as React from "react";
 import { Text, Heading, HStack, Stack } from "@chakra-ui/react";
-import TimeAgo from "react-timeago";
+import ReactTimeAgo from "react-time-ago"
+import TimeAgo from "javascript-time-ago";
+import en from 'javascript-time-ago/locale/en.json'
 import Avatar from "@davatar/react";
 import { Comment } from "../hooks/useCommentsContract";
 
 interface CommentProps {
   comment: Comment;
 }
+
+TimeAgo.addDefaultLocale(en)
 
 const Comment: React.FunctionComponent<CommentProps> = ({ comment }) => {
   return (
@@ -20,7 +24,7 @@ const Comment: React.FunctionComponent<CommentProps> = ({ comment }) => {
           {comment.message}
         </Text>
         <Text color="whiteAlpha.500" fontSize="md">
-          <TimeAgo data={comment.created_at.toNumber() *1000} />
+          <ReactTimeAgo date={comment.created_at.toNumber() * 1000} locale="en" />
         </Text>
       </Stack>
     </HStack>
