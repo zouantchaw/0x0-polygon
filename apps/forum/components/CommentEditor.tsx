@@ -6,8 +6,22 @@ import AuthButton from "./AuthButton";
 import { useAccount } from "wagmi";
 import useAddComment from "../hooks/useAddComment";
 
+// firebase
+import { app, database } from "../firebaseConfig"
+import { collection, addDoc } from 'firebase/firestore';
+
 interface CommentEditorProps {
   topic: string;
+}
+
+// initialize firebase collection
+const dbInstance = collection(database, 'forum-posts')
+
+// Saves post to firebase collection
+const savePostToFirebase = (post) => {
+ addDoc(dbInstance, {
+   post
+ })
 }
 
 const CommentEditor: React.FunctionComponent<CommentEditorProps> = ({
@@ -40,6 +54,8 @@ const CommentEditor: React.FunctionComponent<CommentEditorProps> = ({
         colorScheme="pink"
         alignSelf="flex-end"
         onClick={() => {
+          // save to firebase
+          savePostToFirebase(message)
           // invoke contract function
           mutation
             .mutateAsync({
