@@ -193,7 +193,7 @@ export function Index() {
     try {
       const { ethereum } = window as any;
       if (ethereum) {
-        
+
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
@@ -387,7 +387,7 @@ export function Index() {
     }
   };
 
-  // This will take us into edit mode and show us the edit buttons!
+  // enable edit mode
   const editRecord = (name) => {
     console.log('Editing record for', name);
     setEditing(true);
