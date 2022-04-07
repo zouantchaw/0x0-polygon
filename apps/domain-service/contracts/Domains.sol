@@ -68,7 +68,6 @@ contract Domains is ERC721URIStorage {
         if (!valid(name)) revert InvalidName(name);
 
         uint256 _price = price(name);
-
         // Check if enough Matic was paid in transaction
         require(msg.value >= _price, 'Not enough Matic paid');
 
@@ -121,7 +120,10 @@ contract Domains is ERC721URIStorage {
         // Mint NFT to newRecordId
         _safeMint(msg.sender, newRecordId);
         // Set NFT data
-        _setTokenURI(newDomainId, 'ipfs://QmPMy3z64WkBGkDNUU1bBuN1vQaU8T3qTKZCSR1zKzwpxU');
+        _setTokenURI(
+            newRecordId,
+            'ipfs://QmPMy3z64WkBGkDNUU1bBuN1vQaU8T3qTKZCSR1zKzwpxU'
+        );
         domains[name] = msg.sender;
 
         names[newRecordId] = name;
