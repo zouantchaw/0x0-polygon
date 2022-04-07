@@ -149,8 +149,9 @@ export function Index() {
           contractAbi.abi,
           signer
         );
+        console.log(contract);
 
-        console.log('Going to pop wallet now to pay gas...');
+        console.log('Time to pay gas⛽️...');
         let tx = await contract.register(domain, {
           value: ethers.utils.parseEther(price),
         });
@@ -189,6 +190,7 @@ export function Index() {
 
   // Fetch all domains
   const fetchMints = async () => {
+    console.log("inside fetchMints func")
     try {
       const { ethereum } = window as any;
       if (ethereum) {
@@ -200,8 +202,6 @@ export function Index() {
           contractAbi.abi,
           signer
         );
-
-        console.log('contract:' + contract);
 
         // Get all the domain names from contract
         const names = await contract.getAllNames();

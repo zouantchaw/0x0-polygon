@@ -10,10 +10,13 @@ const main = async () => {
   let txn = await domainContract.register("wiel",  {value: hre.ethers.utils.parseEther('1234')});
   await txn.wait();
 
+  let names = await domainContract.getAllNames();
+  console.log("Names:", names);
+
   const balance = await hre.ethers.provider.getBalance(domainContract.address);
   console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
 
-  // Grab the funds from the contract! (as superCoder)
+  // Grab the funds from the contract
   try {
     txn = await domainContract.connect(superCoder).withdraw();
     await txn.wait();
