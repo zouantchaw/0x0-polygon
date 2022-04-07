@@ -24,7 +24,6 @@ export function Index() {
   const [domain, setDomain] = useState('');
   const [record, setRecord] = useState('');
 
-  // Implement your connectWallet method here
   const connectWallet = async () => {
     try {
       const { ethereum } = window as any;
@@ -202,6 +201,8 @@ export function Index() {
           signer
         );
 
+        console.log('contract:' + contract);
+
         // Get all the domain names from contract
         const names = await contract.getAllNames();
 
@@ -300,7 +301,7 @@ export function Index() {
         <input
           type="text"
           value={record}
-          placeholder="whats ur ninja power?"
+          placeholder="favorite emoji?"
           onChange={(e) => setRecord(e.target.value)}
         />
         {/* If the editing variable is true, return the "Set record" and "Cancel" button */}
@@ -411,7 +412,7 @@ export function Index() {
           <header>
             <div className="left">
               <p className="title">👤 Charaktor Name Service</p>
-              <p className="subtitle">Access your DNS across the metaverse!</p>
+              <p className="subtitle">Access your CNS across the metaverse!</p>
             </div>
             <div className="right">
               <Image
