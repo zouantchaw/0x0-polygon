@@ -1,8 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "domain-service-client": "apps/domain-service-client",
-    "domain-service-client-e2e": "apps/domain-service-client-e2e",
     "domain-service-interface": "apps/domain-service-interface",
     "domain-service-interface-e2e": "apps/domain-service-interface-e2e",
     "forum": "apps/forum",
