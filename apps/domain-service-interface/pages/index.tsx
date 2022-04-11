@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
-import styles from './index.module.css';
 import { ethers } from 'ethers';
 import contractAbi from '../utils/contractABI.json';
 import { networks } from '../utils/network';
 import polygonLogo from '../assets/polygonlogo.png';
 import ethLogo from '../assets/ethlogo.png';
 import Image from 'next/image';
+import { useAccount } from 'wagmi';
 
 const tld = '.charaktor';
-const CONTRACT_ADDRESS = '0x54e535C10D301Db7425Aa39C6F52bcd6DE1e8023';
+const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
 
 export function Index() {
+
+  const [{data, error}, disconnect] = useAccount();
+  console.log('address:' + data?.address);
+
   const [currentAccount, setCurrentAccount] = useState('');
 
   const [loading, setLoading] = useState(false)
@@ -134,7 +138,7 @@ export function Index() {
       alert('Domain must be at least 3 characters long');
       return;
     }
-    // Calculate price based on length of domain (change this to match your contract)
+    // Calculate price based on length of domain name
     // 3 chars = 0.5 MATIC, 4 chars = 0.3 MATIC, 5 or more = 0.1 MATIC
     const price =
       domain.length === 3 ? '0.5' : domain.length === 4 ? '0.3' : '0.1';
@@ -307,7 +311,6 @@ export function Index() {
         {/* If the editing variable is true, return the "Set record" and "Cancel" button */}
         {editing ? (
           <div className="button-container">
-            // Invoke updateDomain
             <button
               className="cta-button mint-button"
               // disabled={loading}
@@ -315,8 +318,6 @@ export function Index() {
             >
               Set record
             </button>
-            // This will let us get out of editing mode by setting editing to
-            false
             <button
               className="cta-button mint-button"
               onClick={() => {
