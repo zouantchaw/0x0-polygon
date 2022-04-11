@@ -5,17 +5,20 @@ import { networks } from '../utils/network';
 import polygonLogo from '../assets/polygonlogo.png';
 import ethLogo from '../assets/ethlogo.png';
 import Image from 'next/image';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 const tld = '.charaktor';
 const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
 
 export function Index() {
 
-  const [{data, error}, disconnect] = useAccount();
-  console.log('address:' + data?.address);
+  const [accountQuery] = useAccount();
+  const [networkQuery] = useNetwork();
 
-  const [currentAccount, setCurrentAccount] = useState('');
+  console.log(networkQuery.data.chain?.name);
+
+
+  // const [currentAccount, setCurrentAccount] = useState('');
 
   const [loading, setLoading] = useState(false)
 
@@ -28,62 +31,62 @@ export function Index() {
   const [domain, setDomain] = useState('');
   const [record, setRecord] = useState('');
 
-  const connectWallet = async () => {
-    try {
-      const { ethereum } = window as any;
+  // const connectWallet = async () => {
+  //   try {
+  //     const { ethereum } = window as any;
 
-      if (!ethereum) {
-        alert('Get MetaMask -> https://metamask.io/');
-        return;
-      }
+  //     if (!ethereum) {
+  //       alert('Get MetaMask -> https://metamask.io/');
+  //       return;
+  //     }
 
-      // Request access to account.
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
-      });
+  //     // Request access to account.
+  //     const accounts = await ethereum.request({
+  //       method: 'eth_requestAccounts',
+  //     });
 
-      // Print out public address once we authorize Metamask.
-      console.log('Connected', accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     // Print out public address once we authorize Metamask.
+  //     console.log('Connected', accounts[0]);
+  //     setCurrentAccount(accounts[0]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // Check for ethereum object in window
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window as any;
+  // const checkIfWalletIsConnected = async () => {
+  //   const { ethereum } = window as any;
 
-    if (!ethereum) {
-      console.log('Make sure you have metamask!');
-      return;
-    } else {
-      console.log('We have the ethereum object', ethereum);
-    }
+  //   if (!ethereum) {
+  //     console.log('Make sure you have metamask!');
+  //     return;
+  //   } else {
+  //     console.log('We have the ethereum object', ethereum);
+  //   }
 
-    // Check if we're authorized to access the user's wallet
-    const accounts = await ethereum.request({ method: 'eth_accounts' });
+  //   // Check if we're authorized to access the user's wallet
+  //   const accounts = await ethereum.request({ method: 'eth_accounts' });
 
-    // Grab the first account
-    if (accounts.length !== 0) {
-      const account = accounts[0];
-      console.log('Found an authorized account:', account);
-      setCurrentAccount(account);
-    } else {
-      console.log('No authorized account found');
-    }
+  //   // Grab the first account
+  //   if (accounts.length !== 0) {
+  //     const account = accounts[0];
+  //     console.log('Found an authorized account:', account);
+  //     setCurrentAccount(account);
+  //   } else {
+  //     console.log('No authorized account found');
+  //   }
 
-    // check the user's network chain ID
-    const chainId = await ethereum.request({ method: 'eth_chainId' });
-    setNetwork(networks[chainId]);
+  //   // check the user's network chain ID
+  //   const chainId = await ethereum.request({ method: 'eth_chainId' });
+  //   setNetwork(networks[chainId]);
 
-    ethereum.on('chainChanged', handleChainChanged);
+  //   ethereum.on('chainChanged', handleChainChanged);
 
-    // Reload the page on network change
-    function handleChainChanged(_chainId) {
-      window.location.reload();
-    }
-  };
+  //   // Reload the page on network change
+  //   function handleChainChanged(_chainId) {
+  //     window.location.reload();
+  //   }
+  // };
 
   const switchNetwork = async () => {
     if ((window as any).ethereum) {
@@ -272,7 +275,7 @@ export function Index() {
         alt="Charaktor png"
       />
       <button
-        onClick={connectWallet}
+        onClick={() => accountQuery.data?.address}
         className="cta-button connect-wallet-button"
       >
         Connect Wallet
@@ -282,7 +285,7 @@ export function Index() {
 
   // Form to enter domain name and data
   const renderInputForm = () => {
-    if (network !== 'Polygon Mumbai Testnet') {
+    if (networkQuery.data.chain?.name !== 'Mumbai') {
       return (
         <div className="connect-wallet-container">
           <p>Please connect to Polygon Mumbai Testnet</p>
@@ -343,7 +346,7 @@ export function Index() {
 
   // Render all domain names
   const renderMints = () => {
-    if (currentAccount && mints.length > 0) {
+    if (accountQuery.data?.address && mints.length > 0) {
       return (
         <div className="mint-container">
           <p className="subtitle"> Recently minted domains!</p>
@@ -366,7 +369,7 @@ export function Index() {
                     </a>
                     {/* If mint.owner is currentAccount, add an "edit" button*/}
                     {mint.owner.toLowerCase() ===
-                    currentAccount.toLowerCase() ? (
+                    accountQuery.data?.address.toLowerCase() ? (
                       <button
                         className="edit-button"
                         onClick={() => editRecord(mint.name)}
@@ -400,11 +403,11 @@ export function Index() {
     if (network === 'Polygon Mumbai Testnet') {
       fetchMints();
     }
-  }, [currentAccount, network]);
+  }, [accountQuery.data?.address, network]);
 
-  useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
+  // useEffect(() => {
+  //   checkIfWalletIsConnected();
+  // }, []);
 
   return (
     <div className="App">
@@ -419,15 +422,15 @@ export function Index() {
               <Image
                 alt="Network logo"
                 className="logo"
-                src={network.includes('Polygon') ? polygonLogo : ethLogo}
+                src={networkQuery.data.chain?.name === 'Mumbai' ? polygonLogo : ethLogo}
                 width={20}
                 height={10}
               />
-              {currentAccount ? (
+              {accountQuery.data?.address ? (
                 <p>
                   {' '}
-                  Wallet: {currentAccount.slice(0, 6)}...
-                  {currentAccount.slice(-4)}{' '}
+                  Wallet: {accountQuery.data?.address.slice(0, 6)}...
+                  {accountQuery.data?.address.slice(-4)}{' '}
                 </p>
               ) : (
                 <p> Not connected </p>
@@ -436,8 +439,8 @@ export function Index() {
           </header>
         </div>
 
-        {!currentAccount && renderNotConnectedContainer()}
-        {currentAccount && renderInputForm()}
+        {!accountQuery.data?.address && renderNotConnectedContainer()}
+        {accountQuery.data?.address && renderInputForm()}
         {mints && renderMints()}
 
         <div className="footer-container"></div>
