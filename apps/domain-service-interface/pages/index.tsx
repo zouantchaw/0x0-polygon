@@ -5,7 +5,7 @@ import { networks } from '../utils/network';
 import polygonLogo from '../assets/polygonlogo.png';
 import ethLogo from '../assets/ethlogo.png';
 import Image from 'next/image';
-import { useAccount, useNetwork } from 'wagmi';
+import { useAccount, useConnect, useNetwork } from 'wagmi';
 
 const tld = '.charaktor';
 const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
@@ -13,9 +13,12 @@ const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
 export function Index() {
 
   const [accountQuery] = useAccount();
+  const [connectQuery, connect] = useConnect();
   const [networkQuery] = useNetwork();
 
   console.log(networkQuery.data.chain?.name);
+
+  console.log(connectQuery.data.connectors);
 
 
   // const [currentAccount, setCurrentAccount] = useState('');
@@ -26,32 +29,10 @@ export function Index() {
 
   const [editing, setEditing] = useState(false);
 
-  const [network, setNetwork] = useState('');
+  // const [network, setNetwork] = useState('');
 
   const [domain, setDomain] = useState('');
   const [record, setRecord] = useState('');
-
-  // const connectWallet = async () => {
-  //   try {
-  //     const { ethereum } = window as any;
-
-  //     if (!ethereum) {
-  //       alert('Get MetaMask -> https://metamask.io/');
-  //       return;
-  //     }
-
-  //     // Request access to account.
-  //     const accounts = await ethereum.request({
-  //       method: 'eth_requestAccounts',
-  //     });
-
-  //     // Print out public address once we authorize Metamask.
-  //     console.log('Connected', accounts[0]);
-  //     setCurrentAccount(accounts[0]);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   // Check for ethereum object in window
   // const checkIfWalletIsConnected = async () => {
@@ -275,7 +256,7 @@ export function Index() {
         alt="Charaktor png"
       />
       <button
-        onClick={() => accountQuery.data?.address}
+        onClick={() => {connect(connectQuery.data.connectors[0])}}
         className="cta-button connect-wallet-button"
       >
         Connect Wallet
@@ -400,10 +381,10 @@ export function Index() {
   };
 
   useEffect(() => {
-    if (network === 'Polygon Mumbai Testnet') {
+    if (networkQuery.data.chain?.name === 'Mumbai') {
       fetchMints();
     }
-  }, [accountQuery.data?.address, network]);
+  }, [accountQuery.data?.address, networkQuery.data.chain?.name]);
 
   // useEffect(() => {
   //   checkIfWalletIsConnected();
