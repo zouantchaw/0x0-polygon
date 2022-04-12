@@ -20,54 +20,14 @@ export function Index() {
 
   console.log(connectQuery.data.connectors);
 
-
-  // const [currentAccount, setCurrentAccount] = useState('');
-
   const [loading, setLoading] = useState(false)
 
   const [mints, setMints] = useState([]);
 
   const [editing, setEditing] = useState(false);
 
-  // const [network, setNetwork] = useState('');
-
   const [domain, setDomain] = useState('');
   const [record, setRecord] = useState('');
-
-  // Check for ethereum object in window
-  // const checkIfWalletIsConnected = async () => {
-  //   const { ethereum } = window as any;
-
-  //   if (!ethereum) {
-  //     console.log('Make sure you have metamask!');
-  //     return;
-  //   } else {
-  //     console.log('We have the ethereum object', ethereum);
-  //   }
-
-  //   // Check if we're authorized to access the user's wallet
-  //   const accounts = await ethereum.request({ method: 'eth_accounts' });
-
-  //   // Grab the first account
-  //   if (accounts.length !== 0) {
-  //     const account = accounts[0];
-  //     console.log('Found an authorized account:', account);
-  //     setCurrentAccount(account);
-  //   } else {
-  //     console.log('No authorized account found');
-  //   }
-
-  //   // check the user's network chain ID
-  //   const chainId = await ethereum.request({ method: 'eth_chainId' });
-  //   setNetwork(networks[chainId]);
-
-  //   ethereum.on('chainChanged', handleChainChanged);
-
-  //   // Reload the page on network change
-  //   function handleChainChanged(_chainId) {
-  //     window.location.reload();
-  //   }
-  // };
 
   const switchNetwork = async () => {
     if ((window as any).ethereum) {
