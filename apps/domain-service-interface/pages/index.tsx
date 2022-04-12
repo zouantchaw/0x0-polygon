@@ -13,7 +13,9 @@ const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
 export function Index() {
 
   const [accountQuery] = useAccount();
+
   const [connectQuery, connect] = useConnect();
+  
   const [networkQuery] = useNetwork();
 
   console.log(networkQuery.data.chain?.name);

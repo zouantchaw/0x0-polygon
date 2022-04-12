@@ -12,6 +12,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>CNS</title>
       </Head>
+      {/* Inject Wagmi provider */}
       <WagmiProvider autoConnect provider={provider}>
         <main className="app">
           <Component {...pageProps} />
