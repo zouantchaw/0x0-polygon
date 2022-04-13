@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 apps/forum-contract/hardhat.config.js
 apps/forum/fbConfig.ts
+apps/domain-service-interface/.env
