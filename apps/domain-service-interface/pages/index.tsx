@@ -1,21 +1,37 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import contractAbi from '../utils/contractABI.json';
-import { networks } from '../utils/network';
 import polygonLogo from '../assets/polygonlogo.png';
 import ethLogo from '../assets/ethlogo.png';
 import Image from 'next/image';
 import { useAccount, useConnect, useNetwork } from 'wagmi';
+import useDomainContract from '../hooks/useDomainContract';
+import { useNames } from '../hooks/useNames';
+import { useRecords } from '../hooks/useRecords';
+import { useOwner } from '../hooks/useOwner';
+import { createRecords } from '../utils/createRecords';
 
 const tld = '.charaktor';
-const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a';
+const CONTRACT_ADDRESS = '0x81163b5ffa646067B5f7575B344c75332F35359a'; 
 
 export function Index() {
+
+  const ownerQuery = useOwner('wiel');
+  console.log('ownerQuery', ownerQuery.data);
+
+  const namesQuery = useNames();
+  console.log('names', namesQuery.data);
+
+  const myRecord = useRecords('wiel');
+  console.log('myRecord', myRecord.data);
+
+  // const recordsQuery = createRecords(namesQuery.data);
+  // console.log('recordsQuery', recordsQuery);
 
   const [accountQuery] = useAccount();
 
   const [connectQuery, connect] = useConnect();
-  
+
   const [networkQuery] = useNetwork();
 
   console.log(networkQuery.data.chain?.name);
@@ -25,6 +41,8 @@ export function Index() {
   const [loading, setLoading] = useState(false)
 
   const [mints, setMints] = useState([]);
+
+  // const allMints = mintRecords(namesQuery.data);
 
   const [editing, setEditing] = useState(false);
 
@@ -177,6 +195,8 @@ export function Index() {
       console.log(error);
     }
   };
+
+  console.log('mints', mints);
 
   // update domain record
   const updateDomain = async () => {
