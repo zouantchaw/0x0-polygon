@@ -8,16 +8,31 @@ import { useRecords } from "../hooks/useRecords";
 //   - record: the record of the domain
 //   - owner: the owner of the domain
 
-export const createRecords = async (names: string[]) => {
-  const records = await Promise.all(names.map(async (name) => {
-    const record = await useRecords(name);
-    const owner = await useOwner(name);
+export const createRecords = (names: string[]) => {
+  const records = names?.map((name) => {
+    const owner = useOwner(name);
+    const records = useRecords(name);
     return {
       id: name,
       name,
-      record,
-      owner,
+      record: records.data,
+      owner: owner.data,
     };
-  }));
+  });
   return records;
-};
+}
+
+// export const createRecords = async (names: string[]) => {
+//   const records = await Promise.all(names?.map(async (name) => {
+//     const record = await useRecords(name);
+//     const owner = await useOwner(name);
+//     return {
+//       id: name,
+//       name,
+//       record,
+//       owner,
+//     };
+//   }));
+
+//   return records;
+// };
