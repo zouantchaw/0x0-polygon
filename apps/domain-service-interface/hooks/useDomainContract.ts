@@ -55,6 +55,12 @@ const useDomainContract = () => {
     });
   }
 
+  const owner = async (name: string): Promise<string> => {
+    return contract.domains(name).then((owner) => {
+      return owner;
+    });
+  }
+
   return {
     contract,
     chainId: contract.provider.network?.chainId,
@@ -63,6 +69,7 @@ const useDomainContract = () => {
     getRecord,
     getAllNames,
     getAddress,
+    owner,
   };
 }
 
